@@ -31,6 +31,23 @@ table 50100 Registration
             Caption = 'Full Name';
             Editable = false;
         }
+        field(12; identity_type; Enum IdentityType)
+        {
+            DataClassification = ToBeClassified;
+            Caption = 'Identity Type';
+            NotBlank = true;
+
+        }
+        field(13; "ID No."; Code[50])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'ID No.';
+        }
+        field(14; "Passport No."; Code[50])
+        {
+            DataClassification = CustomerContent;
+            Caption = 'Passport No.';
+        }
         field(5; phone_no; Text[20])
         {
             DataClassification = CustomerContent;

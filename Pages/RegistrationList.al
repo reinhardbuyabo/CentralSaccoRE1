@@ -27,6 +27,18 @@ page 50100 "Registration List"
                 {
                     ApplicationArea = All;
                 }
+                field("Identity Type"; Rec.identity_type)
+                {
+                    ApplicationArea = All;
+                }
+                field("ID No."; Rec."ID No.")
+                {
+                    ApplicationArea = All;
+                }
+                field("Passport No."; Rec."Passport No.")
+                {
+                    ApplicationArea = All;
+                } 
                 field(id_no; Rec.id_no)
                 {
                     ApplicationArea = All;

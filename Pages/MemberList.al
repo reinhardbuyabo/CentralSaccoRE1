@@ -43,12 +43,18 @@ page 50111 "Member List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the last name of the member';
                 }
+                field(identity_type; Rec.identity_type)
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the identity type of the member.';
+                }
+                
                 field(phone_no; Rec.phone_no)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the phone number of the member.';
                 }
-                 field(location; Rec.location)
+                field(location; Rec.location)
                 {
                     ApplicationArea = All;
                     ToolTip = 'Specifies the location of the member';

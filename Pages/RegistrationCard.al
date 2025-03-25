@@ -38,9 +38,30 @@ page 50101 "Registration Card"
                         Rec.full_name := Rec.first_name + ' ' + Rec.last_name;
                 end;
                 }
-                field(name; Rec.full_name){
+                // Identity Type
+                field(identity_type; Rec.identity_type)
+                {
                     ApplicationArea = All;
-                    Editable = false;
+
+                    trigger OnValidate()
+                    begin
+                        if Rec.identity_type = IdentityType::"National ID" then
+                            Rec."Passport No." := ''
+                        else if Rec.identity_type = IdentityType::Passport then
+                            Rec."ID No." := ''
+                    end;
+                }
+                field("ID No."; Rec."ID No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the ID number of the member.';
+                    Editable = Rec.identity_type = IdentityType::"National ID";
+                }
+                field("Passport No."; Rec."Passport No.")
+                {
+                    ApplicationArea = All;
+                    ToolTip = 'Specifies the passport number of the member.';
+                    Editable = Rec.identity_type = IdentityType::Passport;
                 }
                 field(phone_no; Rec.phone_no)
                 {

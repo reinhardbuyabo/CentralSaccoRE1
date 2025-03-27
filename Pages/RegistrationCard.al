@@ -129,6 +129,32 @@ page 50101 "Registration Card"
                     RegistrationMgt.AutoApproveRegistration(Rec);
                 end;
             }
+
+            // Next of Kin
+            action(NextOfKin)
+            {
+                ApplicationArea = All;
+                Caption = 'Next of Kin';
+                Image = NewLotProperties;
+                Promoted = true;
+                PromotedCategory = Process;
+                PromotedIsBig = true;
+                RunObject = page "Next of Kin List";
+                RunPageLink = "No." = field(registration_no);
+
+                trigger OnAction()
+                var
+                    NextOfKin: Record "Next of Kin";
+                    NextOfKinList: Page "Next of Kin List";
+                begin
+                    // // Filter Next of Kin records for the current customer
+                    // NextOfKin.SetRange("ID No.", Rec.registration_no);
+                    
+                    // // Open the Next of Kin List page with the filtered records
+                    // NextOfKinList.SetTableView(NextOfKin);
+                    // NextOfKinList.RunModal();
+                end;
+            }
         }
     }
 }

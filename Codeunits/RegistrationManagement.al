@@ -87,7 +87,9 @@ codeunit 50100 "Registration Management"
         // Transfer to Membership table
         Membership.Init();
         Membership.member_no := RegistrationRec.registration_no;
-        Membership.id_no := RegistrationRec.id_no;
+        Membership.identity_type := RegistrationRec.identity_type;
+        Membership."ID No." := RegistrationRec."ID No.";
+        Membership."Passport No." := RegistrationRec."Passport No.";
         Membership.first_name := RegistrationRec.first_name;
         Membership.last_name := RegistrationRec.last_name;
         Membership.name := RegistrationRec.full_name;

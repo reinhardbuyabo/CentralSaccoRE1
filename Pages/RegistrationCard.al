@@ -147,12 +147,7 @@ page 50101 "Registration Card"
                     NextOfKin: Record "Next of Kin";
                     NextOfKinList: Page "Next of Kin List";
                 begin
-                    // // Filter Next of Kin records for the current customer
-                    // NextOfKin.SetRange("ID No.", Rec.registration_no);
                     
-                    // // Open the Next of Kin List page with the filtered records
-                    // NextOfKinList.SetTableView(NextOfKin);
-                    // NextOfKinList.RunModal();
                 end;
             }
         }

@@ -8,7 +8,7 @@ page 50100 "Registration List"
     CardPageId = "Registration Card";
     Editable = false;
     // SourceTableView = WHERE(status <> CONST(Approved));
-    
+
     layout
     {
         area(Content)
@@ -18,6 +18,7 @@ page 50100 "Registration List"
                 field(registration_no; Rec.registration_no)
                 {
                     ApplicationArea = All;
+                    // DrillDownPageId = "Registration Card";
                 }
                 field(first_name; Rec.first_name)
                 {
@@ -38,7 +39,7 @@ page 50100 "Registration List"
                 field("Passport No."; Rec."Passport No.")
                 {
                     ApplicationArea = All;
-                } 
+                }
                 field(id_no; Rec.id_no)
                 {
                     ApplicationArea = All;
@@ -53,19 +54,8 @@ page 50100 "Registration List"
                 }
             }
         }
-        area(FactBoxes)
-        {
-            systempart(Links; Links)
-            {
-                ApplicationArea = All;
-            }
-            systempart(Notes; Notes)
-            {
-                ApplicationArea = All;
-            }
-        }
     }
-    
+
     actions
     {
         area(Processing)
@@ -75,7 +65,7 @@ page 50100 "Registration List"
                 ApplicationArea = All;
                 Caption = 'Send For Approval';
                 Image = SendApprovalRequest;
-                
+
                 trigger OnAction()
                 var
                     RegistrationMgt: Codeunit "Registration Management";
@@ -83,13 +73,13 @@ page 50100 "Registration List"
                     RegistrationMgt.SendForApproval(Rec);
                 end;
             }
-            
+
             action(ApproveRegistration)
             {
                 ApplicationArea = All;
                 Caption = 'Approve';
                 Image = Approve;
-                
+
                 trigger OnAction()
                 var
                     RegistrationMgt: Codeunit "Registration Management";
@@ -97,13 +87,13 @@ page 50100 "Registration List"
                     RegistrationMgt.ApproveRegistration(Rec);
                 end;
             }
-            
+
             action(RejectRegistration)
             {
                 ApplicationArea = All;
                 Caption = 'Reject';
                 Image = Reject;
-                
+
                 trigger OnAction()
                 var
                     RegistrationMgt: Codeunit "Registration Management";
@@ -111,7 +101,7 @@ page 50100 "Registration List"
                     RegistrationMgt.RejectRegistration(Rec);
                 end;
             }
-            
+
             action(AutoApprove)
             {
                 ApplicationArea = All;
@@ -120,7 +110,7 @@ page 50100 "Registration List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                
+
                 trigger OnAction()
                 var
                     RegistrationMgt: Codeunit "Registration Management";

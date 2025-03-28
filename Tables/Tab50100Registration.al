@@ -2,19 +2,14 @@
 table 50100 Registration
 {
     DataClassification = ToBeClassified;
-    
+
     fields
     {
-        field(1; registration_no; Integer)
+        field(1; registration_no; Code[8])
         {
             DataClassification = CustomerContent;
-            AutoIncrement = true;
+            // AutoIncrement = true;
             Caption = 'Registration No.';
-        }
-        field(2; id_no; Text[30])
-        {
-            DataClassification = CustomerContent;
-            Caption = 'ID No.';
         }
         field(3; first_name; Text[50])
         {
@@ -26,7 +21,8 @@ table 50100 Registration
             DataClassification = CustomerContent;
             Caption = 'Last Name';
         }
-        field(11; full_name; Text[100]) {
+        field(11; full_name; Text[100])
+        {
             DataClassification = CustomerContent;
             Caption = 'Full Name';
             Editable = false;
@@ -38,7 +34,7 @@ table 50100 Registration
             NotBlank = true;
 
         }
-        field(13; "ID No."; Code[50])
+        field(13; "ID No."; Code[8])
         {
             DataClassification = CustomerContent;
             Caption = 'ID No.';
@@ -52,7 +48,7 @@ table 50100 Registration
         {
             DataClassification = CustomerContent;
             Caption = 'Phone No.';
-            
+
             trigger OnValidate()
             var
                 Registration: Record Registration;
@@ -63,25 +59,25 @@ table 50100 Registration
                 // Check if empty
                 if phone_no = '' then
                     Error('Phone number cannot be empty.');
-                    
+
                 // Basic format validation (adjust pattern as needed for your country format)
                 PhonePattern := '^[0-9+\(\)\s-]{10,15}$'; // Allows digits, +, (), spaces, and - with 10-15 characters
                 if not PhoneRegEx.IsMatch(phone_no, PhonePattern) then
                     Error('Invalid phone number format. Please use a valid format (e.g., +123-456-7890).');
-                
+
                 // Check for duplicate in Registration table
                 Registration.Reset();
                 Registration.SetFilter(registration_no, '<>%1', Rec.registration_no); // Exclude current record
                 Registration.SetRange(phone_no, phone_no);
                 if Registration.FindFirst() then
-                    Error('This phone number is already registered for %1 %2 (Registration No: %3).', 
+                    Error('This phone number is already registered for %1 %2 (Registration No: %3).',
                         Registration.first_name, Registration.last_name, Registration.registration_no);
-                
+
                 // Check for duplicate in Membership table
                 Membership.Reset();
                 Membership.SetRange(phone_no, phone_no);
                 if Membership.FindFirst() then
-                    Error('This phone number is already assigned to member %1 %2 (Member No: %3).', 
+                    Error('This phone number is already assigned to member %1 %2 (Member No: %3).',
                         Membership.first_name, Membership.last_name, Membership.member_no);
             end;
         }
@@ -112,7 +108,7 @@ table 50100 Registration
             Caption = 'Approved By';
         }
     }
-    
+
     keys
     {
         key(PK; registration_no)
@@ -124,10 +120,13 @@ table 50100 Registration
             // Secondary key for phone number to improve lookup performance
         }
     }
-    
+
     // Trigger that runs when a record is inserted
     trigger OnInsert()
+    var
+        NoSeriesMgt: Codeunit "No. Series";
     begin
         Rec.captured_by := UserId;
+        registration_no := NoSeriesMgt.GetNextNo('MEMBER', WorkDate, true);
     end;
 }

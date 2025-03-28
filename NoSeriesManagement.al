@@ -10,7 +10,7 @@ codeunit 50101 "Test No. Series Management"
         TrySeriesDate: Date;
         TryNo: Code[20];
         WarningNoSeriesCode: Code[20];
-        // TextManagement: Codeunit "Text Management";
+    // TextManagement: Codeunit "Text Management";
 
     // Get next number
     procedure GetNextNo(NoSeriesCode: Code[20]; SeriesDate: Date; ModifySeries: Boolean): Code[20]
@@ -52,7 +52,7 @@ codeunit 50101 "Test No. Series Management"
                 NoSeriesLine.SetRange("Starting Date");
                 if not NoSeriesLine.IsEmpty() then
                     Error(Text004, NoSeriesCode, SeriesDate);
-                
+
                 Error(Text005, NoSeriesCode);
             end;
         end else
@@ -72,7 +72,7 @@ codeunit 50101 "Test No. Series Management"
         if NoSeriesLine."Last No. Used" = '' then begin
             if NoErrorsOrWarnings and (NoSeriesLine."Starting No." = '') then
                 exit('');
-            
+
             NoSeriesLine.TestField("Starting No.");
             NoSeriesLine."Last No. Used" := NoSeriesLine."Starting No.";
         end else begin
@@ -84,7 +84,7 @@ codeunit 50101 "Test No. Series Management"
         end;
 
         // Check ending number constraints
-        if (NoSeriesLine."Ending No." <> '') and 
+        if (NoSeriesLine."Ending No." <> '') and
            (NoSeriesLine."Last No. Used" > NoSeriesLine."Ending No.") then begin
             if NoErrorsOrWarnings then
                 exit('');
@@ -92,14 +92,14 @@ codeunit 50101 "Test No. Series Management"
         end;
 
         // Warning for approaching end of series
-        if (NoSeriesLine."Ending No." <> '') and 
+        if (NoSeriesLine."Ending No." <> '') and
            (NoSeriesLine."Warning No." <> '') and
            (NoSeriesLine."Last No. Used" >= NoSeriesLine."Warning No.") and
            (NoSeriesCode <> WarningNoSeriesCode) and
            (TryNoSeriesCode = '') then begin
             if NoErrorsOrWarnings then
                 exit('');
-            
+
             WarningNoSeriesCode := NoSeriesCode;
             Message(Text007, NoSeriesLine."Ending No.", NoSeriesCode);
         end;
@@ -155,11 +155,11 @@ codeunit 50101 "Test No. Series Management"
     begin
         StartPos := 0;
         EndPos := 0;
-        
+
         if No <> '' then begin
             i := StrLen(No);
             repeat
-                IsDigit := No[i] in ['0'..'9'];
+                IsDigit := No[i] in ['0' .. '9'];
                 if IsDigit then begin
                     if EndPos = 0 then
                         EndPos := i;
@@ -182,7 +182,7 @@ codeunit 50101 "Test No. Series Management"
     begin
         if StartPos > 1 then
             StartNo := CopyStr(No, 1, StartPos - 1);
-        
+
         if EndPos < StrLen(No) then
             EndNo := CopyStr(No, EndPos + 1);
 

@@ -2,7 +2,7 @@
 enum 50103 RegistrationStatus
 {
     Extensible = true;
-    
+
     value(0; New)
     {
         Caption = 'New';

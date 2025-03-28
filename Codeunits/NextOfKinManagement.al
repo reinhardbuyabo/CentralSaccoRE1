@@ -1,6 +1,6 @@
 codeunit 50102 "Next of Kin Management"
 {
-    procedure ValidateTotalAllocation(MemberID: Integer)
+    procedure ValidateTotalAllocation(MemberID: Code[8])
     var
         NextOfKin: Record "Next of Kin";
         TotalAllocation: Decimal;

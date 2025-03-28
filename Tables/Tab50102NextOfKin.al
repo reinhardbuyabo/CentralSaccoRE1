@@ -5,7 +5,7 @@ table 50102 "Next of Kin"
 
     fields
     {
-        field(1; "No."; Integer)
+        field(1; "No."; Code[8])
         {
             Caption = 'No.';
             DataClassification = CustomerContent;

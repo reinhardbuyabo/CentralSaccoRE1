@@ -6,7 +6,7 @@ page 50111 "Member List"
     SourceTable = Membership;
     Editable = false;
     // CardPageId = "Member Card"; // Assuming you'll create a "Member Card" page later
-    
+
     layout
     {
         area(Content)
@@ -23,15 +23,10 @@ page 50111 "Member List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the member number.';
                 }
-                field(name; Rec.name) {
-                    ApplicationArea = All;
-                    ToolTip = 'Specifies the full name of the member.';
-                }     
-                        
-                field(id_no; Rec.id_no)
+                field(name; Rec.name)
                 {
                     ApplicationArea = All;
-                    ToolTip = 'Specifies the ID number of the member.';
+                    ToolTip = 'Specifies the full name of the member.';
                 }
                 field(first_name; Rec.first_name)
                 {
@@ -48,7 +43,7 @@ page 50111 "Member List"
                     ApplicationArea = All;
                     ToolTip = 'Specifies the identity type of the member.';
                 }
-                
+
                 field(phone_no; Rec.phone_no)
                 {
                     ApplicationArea = All;
@@ -80,12 +75,12 @@ page 50111 "Member List"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                
+
                 trigger OnAction()
                 begin
-                   Rec.Reset();
-                   Rec.Init();
-                //    PAGE.RunModal(PAGE::"Member Card", Rec);
+                    Rec.Reset();
+                    Rec.Init();
+                    //    PAGE.RunModal(PAGE::"Member Card", Rec);
                 end;
             }
         }

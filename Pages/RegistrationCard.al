@@ -3,7 +3,7 @@ page 50101 "Registration Card"
 {
     PageType = Card;
     SourceTable = Registration;
-    
+
     layout
     {
         area(Content)
@@ -15,10 +15,6 @@ page 50101 "Registration Card"
                     ApplicationArea = All;
                     Editable = false;
                 }
-                field(id_no; Rec.id_no)
-                {
-                    ApplicationArea = All;
-                }
                 field(first_name; Rec.first_name)
                 {
                     ApplicationArea = All;
@@ -26,17 +22,17 @@ page 50101 "Registration Card"
                 field(last_name; Rec.last_name)
                 {
                     ApplicationArea = All;
-                    
-                trigger OnValidate()
-                var
+
+                    trigger OnValidate()
+                    var
                     // myInt: Integer;
-                begin
-                    if Rec.first_name = '' then
-                        Error('First name is required')
-                    else
-                        // Message('%1 %2', Rec.first_name, Rec.last_name);
-                        Rec.full_name := Rec.first_name + ' ' + Rec.last_name;
-                end;
+                    begin
+                        if Rec.first_name = '' then
+                            Error('First name is required')
+                        else
+                            // Message('%1 %2', Rec.first_name, Rec.last_name);
+                            Rec.full_name := Rec.first_name + ' ' + Rec.last_name;
+                    end;
                 }
                 // Identity Type
                 field(identity_type; Rec.identity_type)
@@ -94,7 +90,7 @@ page 50101 "Registration Card"
             }
         }
     }
-    
+
     actions
     {
         area(Processing)
@@ -104,7 +100,7 @@ page 50101 "Registration Card"
                 ApplicationArea = All;
                 Caption = 'Send For Approval';
                 Image = SendApprovalRequest;
-                
+
                 trigger OnAction()
                 var
                     RegistrationMgt: Codeunit "Registration Management";
@@ -112,7 +108,7 @@ page 50101 "Registration Card"
                     RegistrationMgt.SendForApproval(Rec);
                 end;
             }
-            
+
             action(AutoApprove)
             {
                 ApplicationArea = All;
@@ -121,7 +117,7 @@ page 50101 "Registration Card"
                 Promoted = true;
                 PromotedCategory = Process;
                 PromotedIsBig = true;
-                
+
                 trigger OnAction()
                 var
                     RegistrationMgt: Codeunit "Registration Management";
@@ -147,7 +143,7 @@ page 50101 "Registration Card"
                     NextOfKin: Record "Next of Kin";
                     NextOfKinList: Page "Next of Kin List";
                 begin
-                    
+
                 end;
             }
         }

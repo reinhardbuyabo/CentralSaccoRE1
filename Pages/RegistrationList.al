@@ -40,10 +40,7 @@ page 50100 "Registration List"
                 {
                     ApplicationArea = All;
                 }
-                field(id_no; Rec.id_no)
-                {
-                    ApplicationArea = All;
-                }
+                // field(email; Rec.)
                 field(phone_no; Rec.phone_no)
                 {
                     ApplicationArea = All;
@@ -52,6 +49,7 @@ page 50100 "Registration List"
                 {
                     ApplicationArea = All;
                 }
+
             }
         }
     }

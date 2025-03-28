@@ -18,7 +18,7 @@ page 50102 "Next of Kin List"
                     TableRelation = Registration.registration_no;
                     trigger OnValidate()
                     begin
-                        if Rec."No." = 0 then
+                        if Rec."No." = '' then
                             Message(Format(Rec."No."));
                     end;
                 }

@@ -2,18 +2,13 @@
 table 50101 Membership
 {
     DataClassification = ToBeClassified;
-    
+
     fields
     {
-        field(2; member_no; Integer)
+        field(2; member_no; Code[8])
         {
             DataClassification = CustomerContent;
             Caption = 'Member No.';
-        }
-        field(3; id_no; Text[30])
-        {
-            DataClassification = CustomerContent;
-            Caption = 'ID No.';
         }
         field(4; first_name; Text[50])
         {
@@ -29,7 +24,7 @@ table 50101 Membership
         field(11; identity_type; Enum IdentityType)
         {
             DataClassification = CustomerContent;
-            Caption = 'Identity Type'; 
+            Caption = 'Identity Type';
             NotBlank = true;
 
             trigger OnValidate()
@@ -40,7 +35,7 @@ table 50101 Membership
                     Rec."ID No." := ''
             end;
         }
-        field(12; "ID No."; Code[100])
+        field(12; "ID No."; Code[8])
         {
             DataClassification = CustomerContent;
             Caption = 'ID No.';
@@ -71,13 +66,14 @@ table 50101 Membership
             Caption = 'Captured By';
         }
         // Concatenation of first name and last name
-        field(10; name; Text[100]) {
+        field(10; name; Text[100])
+        {
             DataClassification = CustomerContent;
             Caption = 'Name';
             Editable = false;
         }
     }
-    
+
     keys
     {
         key(PK; member_no)

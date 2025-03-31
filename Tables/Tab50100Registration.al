@@ -127,6 +127,6 @@ table 50100 Registration
         NoSeriesMgt: Codeunit "No. Series";
     begin
         Rec.captured_by := UserId;
-        registration_no := NoSeriesMgt.GetNextNo('MEMBER', WorkDate, true);
+        registration_no := NoSeriesMgt.GetNextNo('MEM', WorkDate, true);
     end;
 }

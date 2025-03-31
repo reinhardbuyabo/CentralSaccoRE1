@@ -1,39 +1,54 @@
-table 50109 "Loan Charges"
+table 50114 "Savings Ledger Entries"
 {
     DataClassification = ToBeClassified;
 
     fields
     {
-        field(1; "Charge Code"; Code[20])
+        field(1; "Entry No."; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(2; Description; Text[100])
+        field(2; "Bank No."; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(3; "Charge Method"; Enum "Withdrawal Calculation")
+        field(3; "Posting Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(4; Percentage; Decimal)
+        field(4; "Member No."; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(5; Amount; Decimal)
+        field(5; "Account No."; Code[20])
         {
             DataClassification = ToBeClassified;
         }
-        field(6; "G/L Account"; Code[20])
+        field(6; "Document Type"; Enum "Bank Ledger Document Type")
         {
             DataClassification = ToBeClassified;
-            TableRelation = "G/L Account";
+        }
+        field(7; "Document No."; Code[20])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(8; Amount; Decimal)
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(9; Description; Text[100])
+        {
+            DataClassification = ToBeClassified;
+        }
+        field(10; "User ID"; Code[30])
+        {
+            DataClassification = ToBeClassified;
         }
     }
 
     keys
     {
-        key(PK; "Charge Code")
+        key(PK; "Entry No.")
         {
             Clustered = true;
         }

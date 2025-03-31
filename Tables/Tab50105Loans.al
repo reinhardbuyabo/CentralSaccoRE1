@@ -201,7 +201,7 @@ table 50105 "Loans"
         {
             DataClassification = ToBeClassified;
         }
-        field(29; "Captured By"; Code[20])
+        field(29; "Captured By"; Code[50])
         {
             DataClassification = ToBeClassified;
         }

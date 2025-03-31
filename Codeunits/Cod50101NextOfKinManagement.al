@@ -1,4 +1,4 @@
-codeunit 50102 "Next of Kin Management"
+codeunit 50101 "Next of Kin Management"
 {
     procedure ValidateTotalAllocation(MemberID: Code[8])
     var

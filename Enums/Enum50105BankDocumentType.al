@@ -14,7 +14,7 @@ enum 50105 "Bank Ledger Document Type"
     {
     }
 
-    value(3; "Loan Disbursment")
+    value(3; "Loan Disbursement")
     {
     }
 

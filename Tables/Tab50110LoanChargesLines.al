@@ -8,6 +8,7 @@ table 50110 "Loan Charges Lines"
         {
             DataClassification = ToBeClassified;
             AutoIncrement = true;
+            Editable = false;
         }
 
         field(2; "Charge Code"; Code[20])
@@ -21,20 +22,29 @@ table 50110 "Loan Charges Lines"
             FieldClass = FlowField;
             CalcFormula = LOOKUP("Loan Charges".Description WHERE("Charge Code" = field("Charge Code")));
         }
-        field(4; "Charge Amount"; Decimal)
+        field(4; "Charge Method"; Enum "Withdrawal Calculation")
         {
-            DataClassification = ToBeClassified;
-            Caption = 'Amount';
+            // DataClassification = ToBeClassified;
+            FieldClass = FlowField;
+            CalcFormula = LOOKUP("Loan Charges"."Charge Method" WHERE("Charge Code" = field("Charge Code")));
         }
-        field(5; "Loan Number"; Code[20])
+        field(5; "Charge Amount"; Decimal)
+        {
+            // DataClassification = ToBeClassified;
+            Caption = 'Amount';
+            FieldClass = FlowField;
+            CalcFormula = LOOKUP("Loan Charges".Amount WHERE("Charge Code" = field("Charge Code")));
+        }
+        field(6; "Loan Number"; Code[20])
         {
             DataClassification = ToBeClassified;
+            TableRelation = Loans;
         }
     }
 
     keys
     {
-        key(PK; "No.")
+        key(PK; "No.", "Loan Number")
         {
             Clustered = true;
         }
@@ -67,5 +77,4 @@ table 50110 "Loan Charges Lines"
     begin
 
     end;
-
 }

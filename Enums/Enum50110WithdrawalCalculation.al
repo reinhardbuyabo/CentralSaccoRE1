@@ -10,7 +10,7 @@ enum 50110 "Withdrawal Calculation"
     {
     }
 
-    value(2; Percentage)
+    value(2; "% of Amount")
     {
     }
 }

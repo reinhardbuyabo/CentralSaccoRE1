@@ -1,4 +1,4 @@
-codeunit 50102 "Post Receipt Bank Transactions"
+codeunit 50102 "Loan Activities"
 {
     procedure PostLoan(PostingDate: Date; Description: Text[100]; Amount: Decimal; "Member No.": Code[20]; "Document No.": Code[20]; "Loan No.": Code[20]; "Bank No.": Code[20]; "Document Type": Enum "Bank Ledger Document Type"; "Transaction Type": Enum "Loan Transaction Type"; "Approved Amount": Decimal; "Loan Product Code": Code[20]; "Charge Code": Code[20])
     var
@@ -8,9 +8,10 @@ codeunit 50102 "Post Receipt Bank Transactions"
         RecordsUpdate.InsertBankLedgers("Bank No.", PostingDate, "Member No.", "Document Type"::"Loan Disbursement", "Document No.", (Amount * -1), Description);
         RecordsUpdate.InsertSavingLedgers("Bank No.", PostingDate, "Member No.", "Document No.", "Document Type"::"Loan Disbursement", "Document No.", Amount, Description);
 
-        // Loan Charges
+        // Loan Charges - Filter Loan Charges Lines Table by Loan No.
         TableLoanChargesLines.SetRange("Loan Number", "Loan No.");
 
+        // Find the Loan Charges Lines
         if TableLoanChargesLines.FindSet() then begin
             repeat
                 "Charge Code" := TableLoanChargesLines."Charge Code";
@@ -21,7 +22,7 @@ codeunit 50102 "Post Receipt Bank Transactions"
                         TableLoanCharges.Get("Charge code");
                         if TableLoanCharges."Charge Method" = TableLoanCharges."Charge Method"::Flat then begin
                             TableLoanChargesLines."Charge Amount" := TableLoanCharges.Amount;
-                        end else if TableLoanCharges."Charge Method" = TableLoanCharges."Charge Method"::Percentage then begin
+                        end else if TableLoanCharges."Charge Method" = TableLoanCharges."Charge Method"::"% of Amount" then begin
                             TableLoanChargesLines."Charge Amount" := (TableLoanCharges.Percentage * "Approved Amount") / 100;
                         end;
 
@@ -40,9 +41,16 @@ codeunit 50102 "Post Receipt Bank Transactions"
             RecordsUpdate.InsertLoanLedgers("Bank No.", PostingDate, "Member No.", "Loan No.", "Document Type"::"Loan Disbursement", "Transaction Type"::"Loan Disbursement", "Document No.", "Approved Amount", Description);
 
             // Insert Principal G/L
-            RecordsUpdate.InsertGLEntries(RecordsUpdate.GetNextGLEntryNo(RecordsUpdate.GetGLAccountFromLoanProductPrincipal("Loan Product Code")),
-                PostingDate, RecordsUpdate.GetGLAccountFromLoanProductPrincipal("Loan Product Code"),
-                'Loan Disbursement', "Approved Amount", "Loan No.", '', "Member No.");
+            RecordsUpdate.InsertGLEntries(
+                RecordsUpdate.GetNextGLEntryNo(RecordsUpdate.GetGLAccountFromLoanProductPrincipal("Loan Product Code")), // 1. Entry No. : Integer
+                PostingDate, // 2. Posting Date : Date
+                RecordsUpdate.GetGLAccountFromLoanProductPrincipal("Loan Product Code"), // 3. G/L Account : Code[20]
+                'Loan Disbursement', // 4. Description : Text[100]
+                "Approved Amount", // 5. Amount : Decimal
+                "Loan No.", // 6. Document No. : Code[20]
+                '', // 7. Balance Account No. : Code[20]
+                "Member No." // 8. External Document No. : Code[20]
+                );
 
             // Insert in Member Wallet G/L
             RecordsUpdate.InsertGLEntries(
@@ -74,5 +82,4 @@ codeunit 50102 "Post Receipt Bank Transactions"
         RecordsUpdate: Codeunit "Records Update";
         TableLoanCharges: Record "Loan Charges";
         TableLoanChargesLines: Record "Loan Charges Lines";
-
 }

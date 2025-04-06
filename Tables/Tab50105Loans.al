@@ -13,34 +13,34 @@ table 50105 "Loans"
             DataClassification = ToBeClassified;
             TableRelation = Membership;
         }
-        field(3; "Loan Product Type"; Code[20])
+        field(3; Name; Text[200])
+        {
+            // DataClassification = ToBeClassified; // Only in Normal fieldclasses
+            FieldClass = FlowField;
+            CalcFormula = LOOKUP(Membership.name where(member_no = field("Member No.")));
+        }
+        field(4; "Loan Product Type"; Code[20])
         {
             DataClassification = ToBeClassified;
             TableRelation = "Loan Product Types";
         }
-        field(4; "Loan Product Name"; Text[30])
+        field(5; "Loan Product Name"; Text[30])
         {
             // DataClassification = ToBeClassified; // can only be used for normal fieldclasses
             FieldClass = FlowField;
-            CalcFormula = lookup("Loan Product Types".Description where("Loan Product Code" = field("Loan Product Type")));
+            CalcFormula = LOOKUP("Loan Product Types".Description where("Loan Product Code" = field("Loan Product Type")));
         }
-        field(5; "Application Date"; Date)
+        field(6; "Application Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(6; "Disbursement Date"; Date)
+        field(7; "Disbursement Date"; Date)
         {
             DataClassification = ToBeClassified;
         }
-        field(7; "Status"; Enum "Loan Status")
+        field(8; "Status"; Enum "Loan Status")
         {
             DataClassification = ToBeClassified;
-        }
-        field(8; Name; Text[200])
-        {
-            // DataClassification = ToBeClassified; // Only in Normal fieldclasses
-            FieldClass = FlowField;
-            CalcFormula = lookup(Membership.name where(member_no = field("Member No.")));
         }
         field(9; "ID No."; Code[8])
         {
@@ -84,7 +84,7 @@ table 50105 "Loans"
                 end;
             end;
         }
-        field(12; "Interest Rate"; Integer)
+        field(12; "Interest Rate"; Decimal)
         {
             // DataClassification = ToBeClassified;
             FieldClass = FlowField;
@@ -97,7 +97,7 @@ table 50105 "Loans"
             trigger OnValidate()
             begin
                 LoanProductTypes.Get("Loan Product Type");
-                "Loan Period" := LoanProductTypes."Interest Rate";
+                // "Loan Period" := LoanProductTypes.;
 
                 if "Loan Period" < LoanProductTypes."Minimum Installement" then begin
                     Error('The shortest period you can apply is %1', LoanProductTypes."Minimum Installement");
@@ -283,5 +283,4 @@ table 50105 "Loans"
     begin
 
     end;
-
 }

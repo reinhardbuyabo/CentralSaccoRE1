@@ -5,6 +5,7 @@ page 50104 "Loan Types List"
     UsageCategory = Lists;
     SourceTable = "Loan Product Types";
     CardPageId = 50105;
+    Editable = false;
 
     layout
     {

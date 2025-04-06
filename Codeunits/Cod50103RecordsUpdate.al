@@ -53,7 +53,7 @@ codeunit 50103 "Records Update"
         LoanLedgerEntry."Document Type" := "Document Type";
         LoanLedgerEntry."Transaction Type" := "Transaction Type";
         LoanLedgerEntry."Document No." := "Document No.";
-        LoanLedgerEntry."Amount" := Amount;
+        LoanLedgerEntry."Amount" := Amount; // Approved Amount
         LoanLedgerEntry."Description" := Description;
         LoanLedgerEntry.Insert();
     end;
@@ -98,7 +98,7 @@ codeunit 50103 "Records Update"
     procedure GetGLAccountFromLoanProductPrincipal("Loan Product Code": Code[20]): Code[20]
     begin
         if LoanProductCodeTable.Get("Loan Product Code") then begin
-            exit(LoanProductCodeTable."Principal G/L Account");
+            exit(LoanProductCodeTable."Principal G/L Account"); // returns Principal G/L Account
         end else begin
             Error('Loan Product Principal %1 not found', "Loan Product Code");
         end;
@@ -171,6 +171,7 @@ codeunit 50103 "Records Update"
     var
         myInt: Integer;
     begin
+        // Using Principal G/L Account...
         if GLAccount.Get("GL Account") then begin
             if GLEntries.FindLast() then begin
                 exit(GLEntries."Entry No." + 1);

@@ -1,4 +1,4 @@
-page 50107 "Loan Card"
+page 50107 "Loan Application"
 {
     PageType = Card;
     ApplicationArea = All;
@@ -26,6 +26,12 @@ page 50107 "Loan Card"
                     ApplicationArea = All;
                     Caption = 'Member No';
                     ToolTip = 'Member No';
+                    LookupPageId = "Member List";
+
+                    trigger OnValidate()
+                    begin
+                        Message(Rec.Name);
+                    end;
                 }
                 // Name
                 field(Name; Rec.Name)
@@ -54,6 +60,12 @@ page 50107 "Loan Card"
                     ApplicationArea = All;
                     Caption = 'Loan Product Type';
                     ToolTip = 'Loan Product Type';
+                    LookupPageId = "Loan Types List";
+
+                    trigger OnValidate()
+                    begin
+                        Message(Rec."Loan Product Name");
+                    end;
                 }
                 // Loan Product Name
                 field("Loan Product Name"; Rec."Loan Product Name")
@@ -338,9 +350,11 @@ page 50107 "Loan Card"
                         if TableLoanCharges.FindSet() then begin
                             repeat
                                 "Charge Code" := TableLoanCharges."Charge Code";
-                                TableLoanCharges.Get();
-                                if TableLoanCharges."Charge Method" = TableLoanCharges."Charge Method"::Flat then begin
+                                TableLoanCharges.Get("Charge Code");
+                                if TableLoanCharges."Charge Method" = TableLoanCharges."Charge Method"::"% of Amount" then begin
                                     TableLoanChargesLines."Charge Amount" := (TableLoanCharges.Percentage * Rec."Amount Approved") / 100;
+                                end else if TableLoanCharges."Charge Method" = TableLoanCharges."Charge Method"::Flat then begin
+                                    TableLoanChargesLines."Charge Amount" := Rec."Amount Approved";
                                 end;
 
                                 TableLoanChargesLines.Modify();
@@ -356,7 +370,7 @@ page 50107 "Loan Card"
     var
         TempSavingsRecord: Record "Savings";
         TableLoanChargesLines: Record "Loan Charges Lines";
-        PostTransactionCodeUnit: Codeunit "Post Receipt Bank Transactions";
+        PostTransactionCodeUnit: Codeunit "Loan Activities";
         TableLoanCharges: Record "Loan Charges";
         "Document Type": Enum "Bank Ledger Document Type";
         "Transaction Type": Enum "Loan Transaction Type";

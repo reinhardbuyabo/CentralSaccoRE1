@@ -1,4 +1,4 @@
-page 50106 "Loan List"
+page 50106 "Loan Application List"
 {
     PageType = List;
     ApplicationArea = All;
